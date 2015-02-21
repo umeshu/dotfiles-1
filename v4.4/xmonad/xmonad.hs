@@ -83,7 +83,7 @@ main = do
 	botLeftBar  <- dzenSpawnPipe $ dzenBotLeftFlags r
 	botRightBar <- dzenSpawnPipe $ dzenBotRightFlags r
 	xmonad $ myUrgencyHook defaultConfig
-		{ terminal           = "/usr/bin/urxvtc" --default terminal
+		{ terminal           = "urxvt -e fish" -- "/usr/bin/urxvtc" --default terminal
 		, modMask            = mod4Mask          --default modMask
 		, focusFollowsMouse  = True              --focus follow config
 		, clickJustFocuses   = True              --focus click config
@@ -130,9 +130,9 @@ colorRed       = "#f7a16e"
 colorRedAlt    = "#e0105f"
 colorGreen     = "#66ff66"
 colorGreenAlt  = "#558965"
-boxLeftIcon    = "/home/nnoell/.icons/xbm_icons/subtle/boxleft.xbm"  --left icon of dzen boxes
-boxLeftIcon2   = "/home/nnoell/.icons/xbm_icons/subtle/boxleft2.xbm" --left icon2 of dzen boxes
-boxRightIcon   = "/home/nnoell/.icons/xbm_icons/subtle/boxright.xbm" --right icon of dzen boxes
+boxLeftIcon    = "/home/s76/.icons/xbm_icons/subtle/boxleft.xbm"  --left icon of dzen boxes
+boxLeftIcon2   = "/home/s76/.icons/xbm_icons/subtle/boxleft2.xbm" --left icon2 of dzen boxes
+boxRightIcon   = "/home/s76/.icons/xbm_icons/subtle/boxright.xbm" --right icon of dzen boxes
 xDefRes        = 1366 --no longer used
 yDefRes        = 768  --no longer used
 panelHeight    = 16   --height of top and bottom panels
@@ -282,11 +282,11 @@ green2BBoxPP = BoxPP
 -- Dzen logger clickable areas
 calendarCA :: CA
 calendarCA = CA
-	{ leftClickCA   = "/home/nnoell/bin/dzencal.sh"
-	, middleClickCA = "/home/nnoell/bin/dzencal.sh"
-	, rightClickCA  = "/home/nnoell/bin/dzencal.sh"
-	, wheelUpCA     = "/home/nnoell/bin/dzencal.sh"
-	, wheelDownCA   = "/home/nnoell/bin/dzencal.sh"
+	{ leftClickCA   = "/home/s76/bin/dzencal.sh"
+	, middleClickCA = "/home/s76/bin/dzencal.sh"
+	, rightClickCA  = "/home/s76/bin/dzencal.sh"
+	, wheelUpCA     = "/home/s76/bin/dzencal.sh"
+	, wheelDownCA   = "/home/s76/bin/dzencal.sh"
 	}
 
 layoutCA :: CA
@@ -324,7 +324,7 @@ myWorkspaces = map show $ [1..9] ++ [0]
 workspaceNames :: [WorkspaceId]
 workspaceNames =
 	[ "Terminal"
-	, "Network"
+	, "Webs"
 	, "Development"
 	, "Graphics"
 	, "Chatting"
@@ -358,7 +358,7 @@ myStartupHook =
 	(spawn "/usr/bin/feh --bg-scale ~/Pictures/wallpapers/xmonad/xmonad_def_black.png") <+>
 	(spawn "/usr/bin/killall haskell-cpu-usage.out") <+>
 	(liftIO $ threadDelay 1000000) <+> --needed so that xmonad can be launched on the fly without crashing
-	(spawn "/home/nnoell/.xmonad/apps/haskell-cpu-usage.out 5") <+>
+	(spawn "/home/s76/.xmonad/apps/haskell-cpu-usage.out 5") <+>
 	(startTimer 1 >>= XS.put . TID)
 
 
@@ -762,12 +762,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. controlMask, xK_d), sendMessage $ ToggleGap D) --toogle the bottom gaps
 	--Scripts management bindings
 	, ((modMask, xK_d), spawn "/usr/bin/killall dzen2 haskell-cpu-usage.out")                                             --Kill dzen2
-	, ((0, 0x1008ffa9), spawn "/home/nnoell/bin/touchpadtoggle.sh")                                                       --Toggle touchpad (xmodmap -pk | grep -i toggle)
-	, ((0, xF86XK_AudioMute), spawn "/home/nnoell/bin/voldzen.sh t -d")                                                   --Mute/unmute volume
-	, ((0, xF86XK_AudioRaiseVolume), spawn "/home/nnoell/bin/voldzen.sh + -d")                                            --Raise volume
-	, ((mod1Mask, xK_Up), spawn "/home/nnoell/bin/voldzen.sh + -d")
-	, ((0, xF86XK_AudioLowerVolume), spawn "/home/nnoell/bin/voldzen.sh - -d")                                            --Lower volume
-	, ((mod1Mask, xK_Down), spawn "/home/nnoell/bin/voldzen.sh - -d")
+	, ((0, 0x1008ffa9), spawn "/home/s76/bin/touchpadtoggle.sh")                                                       --Toggle touchpad (xmodmap -pk | grep -i toggle)
+	, ((0, xF86XK_AudioMute), spawn "/home/s76/bin/voldzen.sh t -d")                                                   --Mute/unmute volume
+	, ((0, xF86XK_AudioRaiseVolume), spawn "/home/s76/bin/voldzen.sh + -d")                                            --Raise volume
+	, ((mod1Mask, xK_Up), spawn "/home/s76/bin/voldzen.sh + -d")
+	, ((0, xF86XK_AudioLowerVolume), spawn "/home/s76/bin/voldzen.sh - -d")                                            --Lower volume
+	, ((mod1Mask, xK_Down), spawn "/home/s76/bin/voldzen.sh - -d")
 	, ((0, xF86XK_AudioNext),  flashText myTextConfig 1 " Next Song " >> spawn "/usr/bin/ncmpcpp next")                   --Next song
 	, ((mod1Mask, xK_Right), flashText myTextConfig 1 " Next Song " >> spawn "/usr/bin/ncmpcpp next")
 	, ((0, xF86XK_AudioPrev), flashText myTextConfig 1 " Previous Song " >> spawn "/usr/bin/ncmpcpp prev")                --Prev song
@@ -776,12 +776,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((mod1Mask .|. controlMask, xK_Down), flashText myTextConfig 1 " Song Toggled " >> spawn "/usr/bin/ncmpcpp toggle")
 	, ((0, xF86XK_AudioStop), flashText myTextConfig 1 " Song Stopped " >> spawn "/usr/bin/ncmpcpp stop")                 --Stop song
 	, ((mod1Mask .|. controlMask, xK_Up), flashText myTextConfig 1 " Song Stopped " >> spawn "ncmpcpp stop")
-	, ((0, xF86XK_MonBrightnessUp), spawn "/home/nnoell/bin/bridzen.sh")                                                  --Raise brightness
-	, ((0, xF86XK_MonBrightnessDown), spawn "/home/nnoell/bin/bridzen.sh")                                                --Lower brightness
-	, ((0, xF86XK_ScreenSaver), spawn "/home/nnoell/bin/turnoffscreen.sh")                                                --Lock screen
-	, ((0, 0xff14), spawn "/home/nnoell/bin/turnoffscreen.sh")
+	, ((0, xF86XK_MonBrightnessUp), spawn "/home/s76/bin/bridzen.sh")                                                  --Raise brightness
+	, ((0, xF86XK_MonBrightnessDown), spawn "/home/s76/bin/bridzen.sh")                                                --Lower brightness
+	, ((0, xF86XK_ScreenSaver), spawn "/home/s76/bin/turnoffscreen.sh")                                                --Lock screen
+	, ((0, 0xff14), spawn "/home/s76/bin/turnoffscreen.sh")
 	, ((0, xK_Print), spawn "/usr/bin/scrot '%Y-%m-%d_$wx$h.png'" >> flashText myTextConfig 1 " Screenshot Saved ")       --Take a screenshot
-	, ((modMask , xK_s), spawn "/home/nnoell/bin/turnoffscreen.sh")                                                       --Turn off screen
+	, ((modMask , xK_s), spawn "/home/s76/bin/turnoffscreen.sh")                                                       --Turn off screen
 	--Workspaces management bindings
 	, ((mod1Mask, xK_comma), flashText myTextConfig 1 " Toggled to Previous Workspace " >> toggleWS)                          --Toggle to the workspace displayed previously
 	, ((mod1Mask, xK_masculine), flashText myTextConfig 1 " Switching with Workspace 1 " >> toggleOrView (myWorkspaces !! 0)) --If ws != 0 then move to workspace 0, else move to latest ws I was
